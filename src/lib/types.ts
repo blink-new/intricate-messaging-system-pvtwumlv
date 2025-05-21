@@ -15,6 +15,8 @@ export interface Message {
   status: 'sent' | 'delivered' | 'read';
   replyTo?: string; // ID of message being replied to
   attachments?: Attachment[];
+  read?: boolean; // For compatibility with the old interface
+  text?: string; // For compatibility with the old interface
 }
 
 export interface Attachment {
@@ -31,4 +33,15 @@ export interface ChatThread {
   messages: string[]; // Message IDs
   lastActivity: Date;
   unreadCount: number; // Number of unread messages
+}
+
+export interface Conversation {
+  id: string;
+  participants: User[];
+  messages: Message[];
+  lastMessage?: Message;
+  unreadCount: number;
+  updatedAt: Date;
+  title?: string;
+  isGroup?: boolean;
 }
