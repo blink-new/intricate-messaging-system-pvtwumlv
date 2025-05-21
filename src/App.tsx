@@ -1,50 +1,24 @@
-import { useState } from 'react';
-import { UserList } from './components/UserList';
-import { ChatThread } from './components/ChatThread';
-import { Header } from './components/Header';
-import { User } from './lib/types';
-import { currentUser, users } from './lib/data';
+import { MessagingContainer } from './components/MessagingContainer';
 
 function App() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(users[0]);
-
   return (
-    <div className="flex h-screen bg-background text-foreground antialiased">
-      <div className="w-full max-w-screen-xl mx-auto flex overflow-hidden shadow-lg rounded-lg my-4 border">
-        {/* Left sidebar - User list */}
-        <div className="w-80 flex-shrink-0 h-full">
-          <UserList 
-            currentUserId={currentUser.id} 
-            onSelectUser={setSelectedUser} 
-            selectedUserId={selectedUser?.id}
-          />
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8 flex flex-col">
+      <header className="mb-8 max-w-screen-xl mx-auto w-full px-4">
+        <h1 className="text-3xl font-bold text-center text-blue-600">Intricate Messaging System</h1>
+        <p className="text-center text-slate-500 dark:text-slate-400 mt-2">
+          A sophisticated system for seamless messaging
+        </p>
+      </header>
+      
+      <main className="flex-1 max-w-screen-xl mx-auto w-full px-4">
+        <div className="h-[75vh]">
+          <MessagingContainer />
         </div>
-        
-        {/* Main content - Chat area */}
-        <div className="flex-1 flex flex-col h-full">
-          {selectedUser ? (
-            <>
-              <Header user={selectedUser} />
-              
-              <div className="flex-1 overflow-hidden">
-                <ChatThread 
-                  threadId={`t${users.findIndex(u => u.id === selectedUser.id) + 1}`}
-                  activeUser={selectedUser}
-                />
-              </div>
-            </>
-          ) : (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center p-6">
-                <h2 className="text-2xl font-semibold mb-2">Welcome to ChatApp</h2>
-                <p className="text-muted-foreground">
-                  Select a contact to start messaging
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      </main>
+      
+      <footer className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400 max-w-screen-xl mx-auto w-full px-4">
+        <p>© {new Date().getFullYear()} Intricate Messaging System. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
